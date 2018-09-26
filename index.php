@@ -1,11 +1,9 @@
 <?php
-header('Content-Type:text/json;charset=utf-8');
-
+header("Content-Type: text/html;charset=utf-8");
 require_once "db.php";
 
 class Code
 {
-
 
     function abc()
     {
@@ -18,7 +16,7 @@ class Code
         $host = "https://fapiao.market.alicloudapi.com";
         $path = "/invoice/query";
         $method = "GET";
-        $appcode = "1ec690ed301f422ab0afe2bb8a67f651";
+        $appcode = "93acc0b7137943c5b542ea8c3c917da7";
         $headers = array();
         array_push($headers, "Authorization:APPCODE " . $appcode);
         $querys = "fpdm=$fpdm&fphm=$fphm&kprq=$kprq&checkCode=$checkCode&noTaxAmount=$noTaxAmount";
@@ -35,29 +33,21 @@ class Code
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         }
-        $json = curl_exec($curl);
-        $data = json_decode($json, true);
-
-//        echo $json;
-
-
-        $sql = "select count(id) from record where fpdm = '" . $_GET['fpdm'] . "' and fphm = '" . $_GET['fphm'] . "'";
-        echo $sql;
-        $resultNum = $db->query($sql)->fetchColumn();
-
-        echo $resultNum;
-
-        exit();
-
-        if ($resultNum > 0) {
-
+        $sql = "select * from record where fpdm = '" . $_GET['fpdm'] . "' and fphm = '" . $_GET['fphm'] . "'";
+        $resultNum = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $rowCount = count($resultNum);
+        if ($rowCount > 0) {
+            echo json_encode($resultNum[0]);
         } else {
             $json = curl_exec($curl);
             $data = json_decode($json, true);
-            self::saveData($data);
+            if (!$data) {
+                echo "没有获取到数据";
+                exit();
+            } else {
+                self::saveData($data);
+            }
         }
-
-
     }
 
     /**
@@ -86,47 +76,19 @@ class Code
         $taxRate = isset($data['goodsData'][0]['taxRate']) ? $data['goodsData'][0]['taxRate'] : "";
         $remark = $data['remark'];
         $amount = $data['goodsData'][0]['amount'];
-        $namess = $data['goodsData'][0]['name'];
+        $name = $data['goodsData'][0]['name'];
         $unit = $data['goodsData'][0]['unit'];
         $priceUnit = $data['goodsData'][0]['priceUnit'];
         $priceSum = $data['goodsData'][0]['priceSum'];
         $taxSum = $data['goodsData'][0]['taxSum'];
         $spec = $data['goodsData'][0]['spec'];
-        $isql = "insert into record(fpdm,fphm,kprq,code,fplx,xfMc,xfNsrsbh,xfContact,xfBank,gfMc,gfNsrsbh,gfContact,gfBank,del,taxamount,sumamount,taxRate,remark,amount,namess,unit) values ('$fpdm','$fphm','$kprq','$code','$fplx','$xfMc','$xfNsrsbh','$xfContact','$xfBank','$gfMc','$gfNsrsbh','$gfContact','$gfBack','$del','$taxamount','$sumamount','$taxRate','$remark','$amount','$namess','$unit','')";
-
-
-//        echo($isql);
-
+        $isql = "insert into record(fpdm,fphm,kprq,code,fplx,xfMc,xfNsrsbh,xfContact,xfBank,gfMc,gfNsrsbh,gfContact,gfBank,del,taxamount,sumamount,taxRate,remark,amount,unit,priceUnit,priceSum,taxSum,name,spec) values ('$fpdm','$fphm','$kprq','$code','$fplx','$xfMc','$xfNsrsbh','$xfContact','$xfBank','$gfMc','$gfNsrsbh','$gfContact','$gfBack','$del','$taxamount','$sumamount','$taxRate','$remark','$amount','$unit','$priceUnit','$priceSum','$taxSum','$name','$spec')";
         $result = $db->exec($isql);
-        var_dump($result);
-    }
-
-    /**
-     * 查询数据
-     */
-    function select()
-    {
-        global $db;
-        $ssql = "select count(id) from record where fpdm = " . $_GET['fpdm'] . " and fphm = " . $_GET['fphm'];
-        $num = $db->query($ssql)->fetchColumn();
-        if ($num > 0) {
-            echo json_encode(array(
-                'code' => 0,
-                'data' => 1,
-                'msg' => 'success',
-                'remark' => "无"
-
-            ));
-        } else {
-            echo json_encode(array(
-                'code' => 0,
-                'data' => 0,
-                'msg' => 'success',
-                'remark' => "无"
-
-            ));
+        if ($result) {
+            echo json_encode($data);
         }
     }
+
 }
 
 $aa = new Code();

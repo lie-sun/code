@@ -12,7 +12,11 @@
  * $db = new PDO($dsn, $user, $password);
  */
 
-$dsn = "mysql:host=localhost:3306;dbname=invoice";
+//$dsn = "mysql:host=localhost:3306;dbname=invoice";
+$dsn = "mysql:host=bj-cdb-h6phle00.sql.tencentcdb.com:63057;dbname=invoice";
+//$user = "root";
+//$password = "";
 $user = "root";
-$password = "";
+$password = "chenyu111";
 $db = new PDO($dsn, $user, $password);
+$db->exec('SET NAMES utf8');

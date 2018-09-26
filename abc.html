@@ -5,15 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-<br />
+
 <font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-    <tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught Error: Call to a member function fetchColumn() on boolean in D:\wamp64\www\CODE\db.php on line <i>20</i></th></tr>
-    <tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Error: Call to a member function fetchColumn() on boolean in D:\wamp64\www\CODE\db.php on line <i>20</i></th></tr>
+    <tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Fatal error: Uncaught PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'xfContact' at row 1 in D:\wamp64\www\CODE\code\index.php on line <i>44</i></th></tr>
+    <tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'xfContact' at row 1 in D:\wamp64\www\CODE\code\index.php on line <i>44</i></th></tr>
     <tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
     <tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-    <tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0005</td><td bgcolor='#eeeeec' align='right'>394432</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='D:\wamp64\www\CODE\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-    <tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0068</td><td bgcolor='#eeeeec' align='right'>397032</td><td bgcolor='#eeeeec'>require_once( <font color='#00bb00'>'D:\wamp64\www\CODE\db.php'</font> )</td><td title='D:\wamp64\www\CODE\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>4</td></tr>
-</table></font>
+    <tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0007</td><td bgcolor='#eeeeec' align='right'>391104</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='D:\wamp64\www\CODE\code\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
+    <tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.0025</td><td bgcolor='#eeeeec' align='right'>406576</td><td bgcolor='#eeeeec'>Code->abc(  )</td><td title='D:\wamp64\www\CODE\code\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>103</td></tr>
+    <tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.0026</td><td bgcolor='#eeeeec' align='right'>409584</td><td bgcolor='#eeeeec'><a href='http://www.php.net/PDO.exec' target='_new'>exec</a>
+        (  )</td><td title='D:\wamp64\www\CODE\code\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>44</td></tr>
 
+    <input type="submit">
+</table></font>
+<script>
+    abc.toFixed(2)
+</script>
 </body>
 </html>
