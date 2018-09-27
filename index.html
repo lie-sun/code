@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"-->
+    <!--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+    <!--crossorigin="anonymous"></script>-->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -17,7 +26,9 @@
     <header>
         宋票Message
     </header>
-    <input type="checkbox" value="全选" id="all">全选
+    <div class="allcheck">
+        <input type="checkbox" value="全选" id="all"><label for="all">全选</label>
+    </div>
     <div class="checkboxCon">
 
     </div>
@@ -31,37 +42,55 @@
             url: "./getData.php",
             success: (res) => {
                 let datas = JSON.parse(res);
-                // console.log(datas);
                 if (datas.length <= 0) {
 
                 } else {
                     str = "";
                     for (let i = 0; i < datas.length; i++) {
-                        str += ' <div class="form-check"> <input class="form-check-input" name="piao" type="checkbox" value="" id=' + datas[i]['id'] + '> <label class="form-check-label" for=' + datas[i]['id'] + '> ' + datas[i]['gfmc'] + '-' + datas[i]['kprq'] + '</label> </div>';
+                        str += ' <div class="form-check"> <input class="form-check-input" name="piao" type="checkbox"  id=' + datas[i]['id'] + ' > <label class="form-check-label" for=' + datas[i]['id'] + '> ' + datas[i]['gfmc'] + '-' + datas[i]['kprq'] + '</label> </div>';
                     }
                     $(".checkboxCon").html(str);
+                    checkSwitch();
                 }
-
             }
         });
-        $(".export").on("click", function () {
 
-            $("input[name='piao'] :checkbox[checked]").each(function (index) {
-                console.log($(this).attr("id"));
-                console.log(1);
-            })
+        $(".export").on("click", function () {
+            let exportData = [];
+            $('input[name="piao"]:checked').each(function (index) {
+                exportData.push($(this).attr("id"));
+            });
+
+            downloadFile(exportData);
         });
 
         $("#all").click(function () {
-            console.log(23);
-            if ("this.checked") {
-                console.log(123456);
-                $("input[name='piao'] :checkbox[checked]").is("checked");
+            if (this.checked) {
+                $("input[name='piao']:checkbox").prop("checked", true);
             } else {
-                console.log(54);
-                $("input[name='piao'] :checkbox[checked]").prop("checked", false);
+                $("input[name='piao']:checkbox").prop("checked", false);
             }
         });
+
+
+        function downloadFile(dataArr) {
+            for (let i = 0; i < dataArr.length; i++) {
+
+                window.open('dataexport.php?id=' + dataArr[i], '_blank');
+            }
+        }
+
+        function checkSwitch() {
+            $("input[name='piao']:checkbox").on("click", function () {
+                let len = $("input[name='piao']:checkbox").length,
+                    checkedLen = $('input[name="piao"]:checked').length;
+                if (len == checkedLen) {
+                    $("#all").prop("checked", true);
+                } else {
+                    $("#all").prop("checked", false);
+                }
+            });
+        }
 
     })
 </script>

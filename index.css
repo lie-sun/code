@@ -1,18 +1,40 @@
-html,body,li{
+html, body, li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
-header{
+
+.container {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+header {
     width: 100%;
     margin: 10px 0;
     text-align: center;
     line-height: 50px;
-    border-bottom:  1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
 }
-.checkboxCon{
+
+.checkboxCon {
     box-sizing: border-box;
     padding: 15px;
     font-size: 15px;
     color: #4c4c4c;
+}
+
+.allcheck {
+    box-sizing: border-box;
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.form-check-label {
+    cursor: pointer;
+}
+
+.form-check-label:hover {
+    color: #116fff;
+    text-decoration: underline;
 }
